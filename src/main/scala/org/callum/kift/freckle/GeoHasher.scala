@@ -1,4 +1,4 @@
-package org.callum.kift.frekle
+package org.callum.kift.freckle
 
 
 import ch.hsr.geohash.util.VincentyGeodesy.distanceInMeters

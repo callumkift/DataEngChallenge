@@ -1,9 +1,9 @@
-package org.callum.kift.frekle
+package org.callum.kift.freckle
 
 import com.holdenkarau.spark.testing.SharedSparkContext
 import org.apache.spark.sql.SparkSession
 import org.callum.kift.GeoHasherTestData._
-import org.callum.kift.frekle.GeoHasher._
+import org.callum.kift.freckle.GeoHasher._
 import org.scalatest.{FlatSpec, Matchers, PrivateMethodTester}
 
 /**

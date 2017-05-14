@@ -1,9 +1,9 @@
-package org.callum.kift.frekle
+package org.callum.kift.freckle
 
 import com.holdenkarau.spark.testing.SharedSparkContext
 import org.apache.spark.sql.SparkSession
 import org.callum.kift.SimpleStatsTestData.simpleStatsFixture
-import org.callum.kift.frekle.SimpleStats.dataframeSimpleStats
+import org.callum.kift.freckle.SimpleStats.dataframeSimpleStats
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
