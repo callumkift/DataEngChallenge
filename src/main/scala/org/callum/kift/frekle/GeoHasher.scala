@@ -12,39 +12,40 @@ object GeoHasher {
 
   case class hashDimensionsMeters(latLength: Double, lngLength: Double)
 
-  case class hashLatLongSize(
+  case class hashPlus(
     geoHash: String,
     lat: Double,
     lng: Double,
     size: hashDimensionsMeters,
-    center: latLong,
+    center: latLng,
     distanceToCenter: Double)
 
-  case class latLong(lat: Double, lng: Double) {
-    def geoHashPlus(length: Int): hashLatLongSize = {
+  case class latLng(lat: Double, lng: Double) {
+    def geoHash(length: Int): String = GeoHash.withCharacterPrecision(this.lat, this.lng, length).toBase32
+
+    def toWGS84Point = new WGS84Point(this.lat, this.lng)
+
+    def geoHashPlus(length: Int): hashPlus = {
       val lat = this.lat
       val lng = this.lng
       val hash = GeoHash.withCharacterPrecision(lat, lng, length)
       val boundingBox = hash.getBoundingBox
       val centerPoint = boundingBox.getCenterPoint
-      hashLatLongSize(
+      hashPlus(
         hash.toBase32,
         lat,
         lng,
         boundingBoxSize(boundingBox),
-        latLong(centerPoint.getLatitude, centerPoint.getLongitude),
+        latLng(centerPoint.getLatitude, centerPoint.getLongitude),
         distanceInMeters(this.toWGS84Point, centerPoint))
     }
 
-    def toWGS84Point = new WGS84Point(this.lat, this.lng)
   }
 
   private def boundingBoxSize(boundingBox: BoundingBox): hashDimensionsMeters = {
     val upperLeft = boundingBox.getUpperLeft
     val lowerRight = boundingBox.getLowerRight
     val upperRight = new WGS84Point(boundingBox.getMaxLat, boundingBox.getMaxLon)
-
-    boundingBox.getLatitudeSize
 
     val latLength = distanceInMeters(lowerRight, upperRight)
     val lngLength = distanceInMeters(upperLeft, upperRight)
@@ -68,7 +69,7 @@ object GeoHasher {
 
 
     df
-      .select(latCol, lngCol).as[latLong]
+      .select(latCol, lngCol).as[latLng]
       .map(_.geoHashPlus(hashLength))
       .toDF()
   }
