@@ -6,6 +6,8 @@ scalaVersion := "2.11.8"
 
 lazy val sparkVersion = "2.1.0"
 
+parallelExecution in Test := false
+
 libraryDependencies := Seq(
   "org.apache.spark" %% "spark-core" % sparkVersion % "provided",
   "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
