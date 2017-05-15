@@ -14,6 +14,7 @@ libraryDependencies := Seq(
   "org.apache.spark" %% "spark-mllib" % sparkVersion % "provided",
   "ch.hsr" % "geohash" % "1.3.0",
   "com.github.scopt" %% "scopt" % "3.5.0",
+  "com.typesafe" % "config" % "1.3.1",
 
   // Tests
   "org.scalatest" %% "scalatest" % "2.2.6" % "test",
