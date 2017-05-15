@@ -98,7 +98,7 @@ hashCluster {
 |dn5qhxwn7|[34.846980571746826,-85.22354364395142]      |[4.760932818313025,3.9249413541340807]|3501 |
 
 # 6) 
-To save dataframe to parquet file, give an `outputDirectory` as an argument the main-method
+To save dataframe to parquet file, give an `outputDirectory` as an argument when running the job.
 
 # 7) Additional Analysis
 
@@ -120,11 +120,11 @@ To save dataframe to parquet file, give an `outputDirectory` as an argument the 
 What one can look at in the future:
 * See how events occur on a per-app, per-area basis, etc. 
 * Instead of clustering on a specific area, with no time dependency, add this dependency to see if the clusters are at specific times
-* Currently have static (in-space) clusters. The GeoHash library used allows one to specify the center of a cluster and the size of it. This can then be a moving window over space, and eventually space-time.
-* The IDFA is unique per device, so one can see where they move over time (as the 'event_time' and 'lat/lng' is given). This can be used to predict where they might go next.
+* The code currently has static (in-space) clusters. The GeoHash library used allows one to specify the center of a cluster and the size of it. This can then be a moving window over space, and eventually space-time.
+* The IDFA is unique to each device, so one can see where they move over time (as the 'event_time' and 'lat/lng' is given). This can be used to predict where they might go next.
 
-All of the above lend themselves to knowing what is a popular action and when, and then also where the person could go next. This allows one to know what will be in-demand in certain areas at certain times. This could lead to 'surge-pricing' content, discounting content during quiet times and preempting the user's next location and what to show them.
+All of the above show what is a popular action and when, and where the person could go next. This allows one to know what will be in-demand in certain areas at certain times. This could lead to 'surge-pricing' content, discounting content during quiet times, and preempting the user's next location and what to show them.
  
 Improvements in own code:
-* Do not need to calculate 'size' and 'center' of geohash for every event. This only needs to be done for unique hashes and could be done in a separate dataframe and joined back in.
-* `GeoHasher.findClusters` could be generalised so that the `groupBy` columns are an input
+* For scaling: do not need to calculate 'size' and 'center' of geohash for every event. This only needs to be done for unique hashes and could be done in a separate dataframe (basically create a lookup table) and joined back in.
+* `GeoHasher.findClusters` could be generalised so that the `groupBy` columns are an input.
